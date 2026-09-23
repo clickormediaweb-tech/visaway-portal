@@ -38,13 +38,14 @@
 
         .container {
             width: 100%;
-            max-width: 440px;
+            max-width: 520px;
             background: var(--card-bg);
             border-radius: 24px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
             overflow: hidden;
             border: 1px solid rgba(217, 35, 45, 0.3);
             animation: fadeIn 0.8s ease-out;
+            margin: 20px 0;
         }
 
         @keyframes fadeIn {
@@ -54,23 +55,23 @@
 
         .brand-header {
             background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
-            padding: 30px 25px;
+            padding: 25px 20px;
             text-align: center;
             border-bottom: 4px solid var(--brand-red);
         }
 
         .brand-header h1 {
             color: #FFFFFF;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .brand-header p {
             color: #E2E8F0;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 300;
             letter-spacing: 0.5px;
         }
@@ -78,6 +79,8 @@
         .content-body {
             padding: 25px;
             background: #FFFFFF;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .portal-screen h2 {
@@ -141,31 +144,100 @@
             display: none;
         }
 
+        .form-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--brand-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 18px 0 10px 0;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 4px;
+        }
+
         .form-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             text-align: left;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--primary-navy);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
-        .form-control {
+        .form-control, select.form-control {
             width: 100%;
-            padding: 11px 13px;
+            padding: 10px 12px;
             border: 1px solid #CBD5E1;
             border-radius: 8px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             outline: none;
+            background: #FFF;
             transition: border-color 0.2s;
         }
 
         .form-control:focus {
             border-color: var(--brand-red);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 5px;
+        }
+
+        .checkbox-label {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        .edu-table-container {
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .edu-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            text-align: left;
+        }
+
+        .edu-table th {
+            background: var(--primary-navy);
+            color: #FFF;
+            padding: 8px;
+            font-weight: 600;
+        }
+
+        .edu-table td {
+            border: 1px solid #CBD5E1;
+            padding: 6px;
+        }
+
+        .edu-table input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 0.75rem;
+            background: transparent;
         }
 
         .btn-action {
@@ -179,7 +251,7 @@
             font-size: 0.9rem;
             cursor: pointer;
             transition: background 0.3s;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .btn-action:hover {
@@ -188,7 +260,7 @@
 
         .back-link {
             display: inline-block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-size: 0.78rem;
             color: var(--brand-red);
             text-decoration: none;
@@ -207,8 +279,8 @@
 
         .footer-note {
             text-align: center;
-            padding: 14px;
-            font-size: 0.73rem;
+            padding: 12px;
+            font-size: 0.7rem;
             color: var(--text-muted);
             border-top: 1px solid #EEEEEE;
             background: #FAFAFA;
@@ -220,26 +292,26 @@
     <div class="container">
         <div class="brand-header">
             <h1>Visaway Immigration</h1>
-            <p>Your Trusted Global Mobility Partner</p>
+            <p>Bathinda Branch &bull; Client Services Portal</p>
         </div>
 
         <div class="content-body">
-            <!-- SELECTION SCREEN (Appears immediately when scanned) -->
+            <!-- SELECTION SCREEN -->
             <div id="selectionScreen" class="portal-screen">
                 <h2>Welcome. Please select your client status:</h2>
                 
                 <button class="option-card" onclick="selectJourney('new')">
                     <div class="option-info">
                         <h3>New Client Inquiry &amp; Consultation</h3>
-                        <p>Begin your journey, explore visa pathways, and check eligibility.</p>
+                        <p>Complete your initial profile, academic background, and visa preferences.</p>
                     </div>
                     <div class="option-icon">✦</div>
                 </button>
 
                 <button class="option-card" onclick="selectJourney('revisit')">
                     <div class="option-info">
-                        <h3>Existing Client Case Portal</h3>
-                        <p>Revisit your active file, submit documents, or check processing updates.</p>
+                        <h3>Existing Client Case Portal (Revisit)</h3>
+                        <p>Check active file status, update document submissions, or consult your officer.</p>
                     </div>
                     <div class="option-icon">➔</div>
                 </button>
@@ -247,29 +319,192 @@
                 <div class="admin-toggle" onclick="showGeneratorModal()">[Admin: View Printable QR Code]</div>
             </div>
 
-            <!-- DYNAMIC FORM SCREEN -->
-            <div id="formScreen" class="portal-screen dynamic-form">
+            <!-- NEW CLIENT FORM (Mirrors office physical form) -->
+            <div id="newClientFormScreen" class="portal-screen dynamic-form">
                 <a class="back-link" onclick="goBackToSelection()">← Back to options</a>
-                <h2 id="formTitle" style="text-align: left; margin-bottom: 15px;"></h2>
+                <h2 style="text-align: left; margin-bottom: 10px; font-size: 1.1rem;">New Client Registration[cite: 2]</h2>
                 
-                <form id="clientForm" onsubmit="handleSubmit(event)">
+                <form id="newForm" onsubmit="handleFormSubmit(event, 'new')">
+                    <div class="form-section-title">Personal Details</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name[cite: 2]</label>
+                            <input type="text" class="form-control" required placeholder="e.g., Sajid Ali[cite: 2]">
+                        </div>
+                        <div class="form-group">
+                            <label>Father's Name[cite: 2]</label>
+                            <input type="text" class="form-control" required placeholder="e.g., Sabit Ali[cite: 2]">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Contact Number (WhatsApp)[cite: 2]</label>
+                            <input type="tel" class="form-control" required placeholder="e.g., 8146037497[cite: 2]">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address[cite: 2]</label>
+                            <input type="email" class="form-control" required placeholder="name@gmail.com[cite: 2]">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Address[cite: 2]</label>
+                            <input type="text" class="form-control" placeholder="VPO / City[cite: 2]">
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth (D.O.B.)[cite: 2]</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Marital Status[cite: 2]</label>
+                            <select class="form-control">
+                                <option>Single[cite: 2]</option>
+                                <option>Married[cite: 2]</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section-title">Purpose of Visit[cite: 2]</div>
                     <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" class="form-control" required placeholder="Enter your full name">
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox"> IELTS[cite: 2]</label>
+                            <label class="checkbox-label"><input type="checkbox"> PTE[cite: 2]</label>
+                            <label class="checkbox-label"><input type="checkbox"> Study Visa[cite: 2]</label>
+                            <label class="checkbox-label"><input type="checkbox"> Tourist Visa[cite: 2]</label>
+                            <label class="checkbox-label"><input type="checkbox"> Work Permit[cite: 2]</label>
+                        </div>
                     </div>
+
+                    <div class="form-section-title">Educational Background[cite: 2]</div>
+                    <div class="edu-table-container">
+                        <table class="edu-table">
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Stream</th>
+                                    <th>Board/Uni</th>
+                                    <th>Passing Yr</th>
+                                    <th>% / GPA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>10th</strong></td>
+                                    <td><input type="text" placeholder="Stream"></td>
+                                    <td><input type="text" placeholder="Board"></td>
+                                    <td><input type="text" placeholder="Year"></td>
+                                    <td><input type="text" placeholder="%"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>12th</strong></td>
+                                    <td><input type="text" placeholder="Stream"></td>
+                                    <td><input type="text" placeholder="Board"></td>
+                                    <td><input type="text" placeholder="Year"></td>
+                                    <td><input type="text" placeholder="%"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Bachelors</strong></td>
+                                    <td><input type="text" placeholder="Degree"></td>
+                                    <td><input type="text" placeholder="University"></td>
+                                    <td><input type="text" placeholder="Year"></td>
+                                    <td><input type="text" placeholder="%"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Masters</strong></td>
+                                    <td><input type="text" placeholder="Degree"></td>
+                                    <td><input type="text" placeholder="University"></td>
+                                    <td><input type="text" placeholder="Year"></td>
+                                    <td><input type="text" placeholder="%"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-section-title">Language Tests &amp; Scores</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Exam Date[cite: 2]</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Overall Score / Band[cite: 2]</label>
+                            <input type="text" class="form-control" placeholder="e.g. 7.0 or 65">
+                        </div>
+                    </div>
+
+                    <div class="form-section-title">Visa History &amp; Preferences[cite: 2]</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Any Prior Visa Refusal?[cite: 2]</label>
+                            <select class="form-control">
+                                <option>No[cite: 2]</option>
+                                <option>Yes (Provide details)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Work Experience / Internships[cite: 2]</label>
+                            <input type="text" class="form-control" placeholder="e.g., 8 months[cite: 2]">
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
-                        <label>Phone Number (WhatsApp preferred)</label>
-                        <input type="tel" class="form-control" required placeholder="+44 / +91 ...">
+                        <label>Preferred Country[cite: 2]</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label"><input type="checkbox"> Canada[cite: 2]</label>
+                            <label class="checkbox-label"><input type="checkbox"> Australia[cite: 2]</label>
+                            <label class="checkbox-label"><input type="checkbox"> UK[cite: 2]</label>
+                            <label class="checkbox-label"><input type="checkbox"> USA[cite: 2]</label>
+                        </div>
                     </div>
-                    <div class="form-group" id="extraFieldContainer">
-                        <label id="extraLabel">Visa Category of Interest</label>
-                        <input type="text" class="form-control" id="dynamicInput" placeholder="e.g., Skilled Worker, Student Visa">
+                    
+                    <div class="form-group">
+                        <label>Course Field / Specialization Interested In[cite: 2]</label>
+                        <input type="text" class="form-control" placeholder="e.g., Agriculture, Business, IT[cite: 2]">
                     </div>
-                    <button type="submit" class="btn-action">Submit Securely</button>
+
+                    <button type="submit" class="btn-action">Submit New Inquiry</button>
                 </form>
             </div>
 
-            <!-- ADMIN QR CODE DISPLAY MODAL (Hidden by default) -->
+            <!-- EXISTING / REVISIT CLIENT FORM -->
+            <div id="revisitClientFormScreen" class="portal-screen dynamic-form">
+                <a class="back-link" onclick="goBackToSelection()">← Back to options</a>
+                <h2 style="text-align: left; margin-bottom: 15px; font-size: 1.1rem;">Existing Client Case Portal (Revisit)</h2>
+                
+                <form id="revisitForm" onsubmit="handleFormSubmit(event, 'revisit')">
+                    <div class="form-group">
+                        <label>Full Name[cite: 2]</label>
+                        <input type="text" class="form-control" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number (WhatsApp)[cite: 2]</label>
+                        <input type="tel" class="form-control" required placeholder="Enter registered phone number">
+                    </div>
+                    <div class="form-group">
+                        <label>Assigned File Reference / ID Number</label>
+                        <input type="text" class="form-control" required placeholder="e.g., VW-2026-XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>Purpose of Revisit / Update Needed</label>
+                        <select class="form-control">
+                            <option>File Processing Status Update</option>
+                            <option>Document Submission / Upload</option>
+                            <option>IELTS / PTE Class Follow-up</option>
+                            <option>Consultation with Senior Advisor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Notes or Message for Counselor</label>
+                        <textarea class="form-control" rows="3" placeholder="Describe what you would like to discuss..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-action">Pull Up My File</button>
+                </form>
+            </div>
+
+            <!-- ADMIN QR CODE MODAL -->
             <div id="generatorScreen" class="portal-screen" style="display: none; text-align: center;">
                 <a class="back-link" onclick="goBackToSelection()">← Back to Client Portal</a>
                 <h2 style="margin-bottom: 5px;">Your Permanent QR Code</h2>
@@ -282,15 +517,13 @@
         </div>
 
         <div class="footer-note">
-            Secure Encrypted Client Gateway &bull; Visaway Immigration
+            Visaway Immigration Services &bull; Ajit Road, Bathinda[cite: 2]
         </div>
     </div>
 
     <script>
-        // Your live GitHub Pages link
         const githubPageUrl = "https://clickormediaweb-tech.github.io/visaway-portal/";
 
-        // Generate the QR code automatically in the hidden admin view
         window.onload = function() {
             new QRCode(document.getElementById("qrcode"), {
                 text: githubPageUrl,
@@ -304,44 +537,38 @@
 
         function showGeneratorModal() {
             document.getElementById('selectionScreen').style.display = 'none';
-            document.getElementById('formScreen').style.display = 'none';
+            document.getElementById('newClientFormScreen').style.display = 'none';
+            document.getElementById('revisitClientFormScreen').style.display = 'none';
             document.getElementById('generatorScreen').style.display = 'block';
         }
 
-        let currentType = '';
-
         function selectJourney(type) {
-            currentType = type;
             document.getElementById('selectionScreen').style.display = 'none';
             document.getElementById('generatorScreen').style.display = 'none';
-            document.getElementById('formScreen').style.display = 'block';
-            
-            const titleEl = document.getElementById('formTitle');
-            const extraLabelEl = document.getElementById('extraLabel');
-            const dynamicInputEl = document.getElementById('dynamicInput');
 
             if (type === 'new') {
-                titleEl.innerText = 'New Client Inquiry & Consultation';
-                extraLabelEl.innerText = 'Target Visa / Destination Country';
-                dynamicInputEl.placeholder = 'e.g., Skilled Worker, Student Visa';
+                document.getElementById('newClientFormScreen').style.display = 'block';
+                document.getElementById('revisitClientFormScreen').style.display = 'none';
             } else {
-                titleEl.innerText = 'Existing Client Case Portal';
-                extraLabelEl.innerText = 'Reference File ID / Registration Number';
-                dynamicInputEl.placeholder = 'e.g., VW-2026-XXXX';
+                document.getElementById('revisitClientFormScreen').style.display = 'block';
+                document.getElementById('newClientFormScreen').style.display = 'none';
             }
         }
 
         function goBackToSelection() {
-            document.getElementById('formScreen').style.display = 'none';
+            document.getElementById('newClientFormScreen').style.display = 'none';
+            document.getElementById('revisitClientFormScreen').style.display = 'none';
             document.getElementById('generatorScreen').style.display = 'none';
             document.getElementById('selectionScreen').style.display = 'block';
         }
 
-        function handleSubmit(e) {
+        function handleFormSubmit(e, type) {
             e.preventDefault();
-            alert(currentType === 'new' 
-                ? 'Thank you! Your inquiry has been submitted. Our immigration advisory team will contact you shortly.' 
-                : 'Thank you! Pulling up your active case file details...');
+            if (type === 'new') {
+                alert('Thank you! Your new client consultation profile has been submitted successfully to Visaway Immigration. Our advisory desk will reach out shortly.');
+            } else {
+                alert('Thank you! Your file check-in request has been logged. Our team is pulling up your active case details.');
+            }
         }
     </script>
 </body>
