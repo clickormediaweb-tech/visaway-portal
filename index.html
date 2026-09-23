@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visaway Immigration Services | Client Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #0B192C;
+            --secondary-navy: #1E3E62;
+            --brand-red: #D9232D;
+            --brand-red-light: #FCE8E6;
+            --card-bg: #FFFFFF;
+            --text-main: #222222;
+            --text-muted: #555555;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-navy);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(30, 62, 98, 0.7) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(217, 35, 45, 0.15) 0%, transparent 40%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+            border: 1px solid rgba(217, 35, 45, 0.3);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand-header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            padding: 30px 25px;
+            text-align: center;
+            border-bottom: 4px solid var(--brand-red);
+        }
+
+        .brand-header h1 {
+            color: #FFFFFF;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .brand-header p {
+            color: #E2E8F0;
+            font-size: 0.8rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .content-body {
+            padding: 25px;
+            background: #FFFFFF;
+        }
+
+        .generator-card {
+            text-align: center;
+        }
+
+        .generator-card h2 {
+            font-size: 1.05rem;
+            color: var(--primary-navy);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .generator-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #FAFAFA;
+            border: 1px dashed #CBD5E1;
+            border-radius: 12px;
+        }
+
+        .btn-action {
+            width: 100%;
+            background: var(--brand-red);
+            color: #FFFFFF;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-action:hover {
+            background: #B51B22;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-navy);
+            border: 1.5px solid var(--primary-navy);
+            margin-top: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(11, 25, 44, 0.05);
+        }
+
+        .portal-screen {
+            display: none;
+        }
+
+        .portal-screen h2 {
+            font-size: 1.05rem;
+            color: var(--primary-navy);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FAFC;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            width: 100%;
+        }
+
+        .option-card:hover {
+            border-color: var(--brand-red);
+            background: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(217, 35, 45, 0.12);
+        }
+
+        .option-info h3 {
+            font-size: 0.95rem;
+            color: var(--primary-navy);
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .option-info p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .option-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--brand-red-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-red);
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .dynamic-form {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--brand-red);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 12px;
+            font-size: 0.78rem;
+            color: var(--brand-red);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 14px;
+            font-size: 0.73rem;
+            color: var(--text-muted);
+            border-top: 1px solid #EEEEEE;
+            background: #FAFAFA;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="brand-header">
+            <h1>Visaway Immigration</h1>
+            <p>Your Trusted Global Mobility Partner</p>
+        </div>
+
+        <div class="content-body">
+            <div id="generatorScreen" class="generator-card">
+                <h2>Client Portal QR Code</h2>
+                <p>This permanent QR code is linked to your live GitHub website address.</p>
+                
+                <div id="qrcode"></div>
+                
+                <button class="btn-action" onclick="switchToPortal()">Simulate Client View</button>
+                <button class="btn-action btn-secondary" onclick="alert('Right-click the QR code image above and select \'Save image as\' to download it for print!')">How to Download</button>
+            </div>
+
+            <div id="selectionScreen" class="portal-screen">
+                <h2>Welcome. Please select your client status:</h2>
+                
+                <button class="option-card" onclick="selectJourney('new')">
+                    <div class="option-info">
+                        <h3>New Client Consultation</h3>
+                        <p>Explore visa pathways, eligibility checks, and book initial assessments.</p>
+                    </div>
+                    <div class="option-icon">✦</div>
+                </button>
+
+                <button class="option-card" onclick="selectJourney('revisit')">
+                    <div class="option-info">
+                        <h3>Existing / Revisit Customer</h3>
+                        <p>Follow up on active file processing, document submission, or case review.</p>
+                    </div>
+                    <div class="option-icon">➔</div>
+                </button>
+
+                <button class="btn-action btn-secondary" style="margin-top: 20px;" onclick="switchToGenerator()">← Back to QR Generator</button>
+            </div>
+
+            <div id="formScreen" class="portal-screen dynamic-form">
+                <a class="back-link" onclick="goBackToSelection()">← Back to options</a>
+                <h2 id="formTitle" style="text-align: left; margin-bottom: 15px;"></h2>
+                
+                <form id="clientForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number (WhatsApp preferred)</label>
+                        <input type="tel" class="form-control" required placeholder="+44 / +91 ...">
+                    </div>
+                    <div class="form-group" id="extraFieldContainer">
+                        <label id="extraLabel">Visa Category of Interest</label>
+                        <input type="text" class="form-control" id="dynamicInput" placeholder="e.g., Skilled Worker, Spouse Visa">
+                    </div>
+                    <button type="submit" class="btn-action">Proceed Securely</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Secure Encrypted Client Gateway &bull; Visaway Immigration
+        </div>
+    </div>
+
+    <script>
+        // REPLACE THE URL BELOW with your final GitHub Pages link after creating your repository
+        const githubPageUrl = "https://YOUR-GITHUB-USERNAME.github.io/visaway-portal/";
+
+        window.onload = function() {
+            new QRCode(document.getElementById("qrcode"), {
+                text: githubPageUrl,
+                width: 170,
+                height: 170,
+                colorDark : "#0B192C",  // Deep Navy QR dots matching your brand
+                colorLight : "#FFFFFF", // Clean White background
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        };
+
+        function switchToPortal() {
+            document.getElementById('generatorScreen').style.display = 'none';
+            document.getElementById('selectionScreen').style.display = 'block';
+        }
+
+        function switchToGenerator() {
+            document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('generatorScreen').style.display = 'block';
+        }
+
+        let currentType = '';
+
+        function selectJourney(type) {
+            currentType = type;
+            document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('formScreen').style.display = 'block';
+            
+            const titleEl = document.getElementById('formTitle');
+            const extraLabelEl = document.getElementById('extraLabel');
+            const dynamicInputEl = document.getElementById('dynamicInput');
+
+            if (type === 'new') {
+                titleEl.innerText = 'New Client Registration';
+                extraLabelEl.innerText = 'Target Visa / Destination Country';
+                dynamicInputEl.placeholder = 'e.g., Skilled Worker, Student Visa';
+            } else {
+                titleEl.innerText = 'Client Check-In (Revisit)';
+                extraLabelEl.innerText = 'Reference Number or File ID';
+                dynamicInputEl.placeholder = 'e.g., VW-2026-XXXX';
+            }
+        }
+
+        function goBackToSelection() {
+            document.getElementById('formScreen').style.display = 'none';
+            document.getElementById('selectionScreen').style.display = 'block';
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert(currentType === 'new' 
+                ? 'Thank you! Redirecting you to our immigration consultant matching desk...' 
+                : 'Thank you! Pulling up your active file details...');
+        }
+    </script>
+</body>
+</html>
