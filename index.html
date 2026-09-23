@@ -60,12 +60,7 @@
             border-bottom: 4px solid var(--brand-red);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand-left {
-            display: flex;
-            align-items: center;
+            justify-content: center;
             gap: 12px;
         }
 
@@ -93,22 +88,6 @@
             font-weight: 300;
             letter-spacing: 0.5px;
             text-align: left;
-        }
-
-        .admin-qr-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: #FFF;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .admin-qr-btn:hover {
-            background: var(--brand-red);
-            border-color: var(--brand-red);
         }
 
         .content-body {
@@ -153,6 +132,7 @@
             border: 1px dashed #CBD5E1;
             border-radius: 12px;
             width: max-content;
+            cursor: pointer;
         }
 
         .portal-screen h2 {
@@ -350,22 +330,26 @@
 
     <div class="container">
         <div class="brand-header">
-            <div class="brand-left">
-                <!-- Fallback to a styled monogram if local image path isn't mapped -->
-                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23D9232D'/><text x='50' y='65' font-size='45' font-family='Arial' fill='FFF' text-anchor='middle'>V</text></svg>" alt="Visaway Logo" class="brand-logo" id="logoImg">
-                <div class="brand-text">
-                    <h1>Visaway</h1>
-                    <p>Bathinda Branch &bull; Client Portal</p>
-                </div>
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23D9232D'/><text x='50' y='65' font-size='45' font-family='Arial' fill='FFF' text-anchor='middle'>V</text></svg>" alt="Visaway Logo" class="brand-logo">
+            <div class="brand-text">
+                <h1>Visaway</h1>
+                <p>Bathinda Branch &bull; Client Portal</p>
             </div>
-            <!-- Admin button to view/print QR code without interfering with client scans -->
-            <button class="admin-qr-btn" onclick="switchScreen('screen-generator')">Admin QR</button>
         </div>
 
         <div class="content-body">
             
-            <!-- SCREEN 1: SELECTION SCREEN (Appears immediately when clients scan the QR code) -->
-            <div id="screen-selection" class="screen-view active portal-screen">
+            <!-- SCREEN 1: QR CODE VIEW (Appears when opening the link directly on a PC/screen) -->
+            <div id="screen-generator" class="screen-view active generator-card">
+                <h2>Official Company QR Code</h2>
+                <p>Scan the QR code</p>
+                
+                <!-- Clicking the QR code acts as a shortcut to test categories -->
+                <div id="qrcode" title="Click to test portal categories" onclick="switchScreen('screen-selection')"></div>
+            </div>
+
+            <!-- SCREEN 2: SELECTION SCREEN (Appears when scanned via phone camera because of URL hash) -->
+            <div id="screen-selection" class="screen-view portal-screen">
                 <h2>Welcome. Please select your client status:</h2>
                 
                 <button class="option-card" onclick="switchScreen('screen-new-form')">
@@ -385,7 +369,7 @@
                 </button>
             </div>
 
-            <!-- SCREEN 2: NEW CLIENT FORM -->
+            <!-- SCREEN 3: NEW CLIENT FORM -->
             <div id="screen-new-form" class="screen-view portal-screen">
                 <a class="back-link" onclick="switchScreen('screen-selection')">← Back to options</a>
                 <h2 style="text-align: left; margin-bottom: 10px; font-size: 1.1rem;">New Client Registration</h2>
@@ -534,7 +518,7 @@
                 </form>
             </div>
 
-            <!-- SCREEN 3: EXISTING / REVISIT CLIENT FORM -->
+            <!-- SCREEN 4: EXISTING / REVISIT CLIENT FORM -->
             <div id="screen-revisit-form" class="screen-view portal-screen">
                 <a class="back-link" onclick="switchScreen('screen-selection')">← Back to options</a>
                 <h2 style="text-align: left; margin-bottom: 15px; font-size: 1.1rem;">Existing Client Case Portal (Revisit)</h2>
@@ -570,15 +554,6 @@
                 </form>
             </div>
 
-            <!-- SCREEN 4: ADMIN QR CODE VIEW (Hidden for clients, viewed by clicking "Admin QR" in header) -->
-            <div id="screen-generator" class="screen-view generator-card">
-                <a class="back-link" onclick="switchScreen('screen-selection')">← Back to Client Portal</a>
-                <h2>Official Company QR Code</h2>
-                <p>Scan the QR code</p>
-                
-                <div id="qrcode"></div>
-            </div>
-
         </div>
 
         <div class="footer-note">
@@ -589,16 +564,21 @@
     <script>
         const githubPageUrl = "https://clickormediaweb-tech.github.io/visaway-portal/";
 
-        // Automatically render the QR code for admin use
         window.onload = function() {
+            // Render QR Code on the first screen
             new QRCode(document.getElementById("qrcode"), {
-                text: githubPageUrl,
+                text: githubPageUrl + "#portal",
                 width: 170,
                 height: 170,
                 colorDark : "#0B192C",
                 colorLight : "#FFFFFF",
                 correctLevel : QRCode.CorrectLevel.H
             });
+
+            // If the URL has #portal in it (meaning it was opened via phone scan), go straight to categories!
+            if (window.location.hash === "#portal") {
+                switchScreen('screen-selection');
+            }
         };
 
         // Smooth screen switcher
@@ -606,8 +586,6 @@
             const screens = document.querySelectorAll('.screen-view');
             screens.forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
-            
-            // Scroll container back to top on screen change
             document.querySelector('.content-body').scrollTop = 0;
         }
 
