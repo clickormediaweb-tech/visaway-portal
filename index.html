@@ -312,6 +312,15 @@
             cursor: pointer;
         }
 
+        .admin-toggle {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
         .footer-note {
             text-align: center;
             padding: 12px;
@@ -332,19 +341,8 @@
 
         <div class="content-body">
             
-            <!-- SCREEN 1: QR CODE / SCANNER VIEW (Appears first when link is opened) -->
-            <div id="screen-generator" class="screen-view active generator-card">
-                <h2>Official Company QR Code</h2>
-                <p>Scan this QR code from any mobile phone or save it for printing.</p>
-                
-                <div id="qrcode"></div>
-                
-                <button class="btn-action" onclick="switchScreen('screen-selection')">Simulate QR Scan (Open Portal)</button>
-                <button class="btn-action btn-secondary" onclick="alert('Right-click the QR code above and select Save Image As to download it for print!')">How to Download</button>
-            </div>
-
-            <!-- SCREEN 2: SELECTION SCREEN (Two options after scanning) -->
-            <div id="screen-selection" class="screen-view portal-screen">
+            <!-- SCREEN 1: SELECTION SCREEN (Appears immediately when scanned by a client) -->
+            <div id="screen-selection" class="screen-view active portal-screen">
                 <h2>Welcome. Please select your client status:</h2>
                 
                 <button class="option-card" onclick="switchScreen('screen-new-form')">
@@ -363,10 +361,10 @@
                     <div class="option-icon">➔</div>
                 </button>
 
-                <button class="btn-action btn-secondary" onclick="switchScreen('screen-generator')">← Back to QR Code View</button>
+                <div class="admin-toggle" onclick="switchScreen('screen-generator')">[Admin: View Printable QR Code]</div>
             </div>
 
-            <!-- SCREEN 3: NEW CLIENT FORM -->
+            <!-- SCREEN 2: NEW CLIENT FORM -->
             <div id="screen-new-form" class="screen-view portal-screen">
                 <a class="back-link" onclick="switchScreen('screen-selection')">← Back to options</a>
                 <h2 style="text-align: left; margin-bottom: 10px; font-size: 1.1rem;">New Client Registration</h2>
@@ -515,7 +513,7 @@
                 </form>
             </div>
 
-            <!-- SCREEN 4: EXISTING / REVISIT CLIENT FORM -->
+            <!-- SCREEN 3: EXISTING / REVISIT CLIENT FORM -->
             <div id="screen-revisit-form" class="screen-view portal-screen">
                 <a class="back-link" onclick="switchScreen('screen-selection')">← Back to options</a>
                 <h2 style="text-align: left; margin-bottom: 15px; font-size: 1.1rem;">Existing Client Case Portal (Revisit)</h2>
@@ -551,6 +549,17 @@
                 </form>
             </div>
 
+            <!-- SCREEN 4: ADMIN QR CODE GENERATOR VIEW (Hidden by default, opened only via admin link) -->
+            <div id="screen-generator" class="screen-view generator-card">
+                <a class="back-link" onclick="switchScreen('screen-selection')">← Back to Client Portal</a>
+                <h2>Official Company QR Code</h2>
+                <p>Save this QR code for printing on marketing materials or office desks.</p>
+                
+                <div id="qrcode"></div>
+                
+                <button class="btn-action btn-secondary" onclick="alert('Right-click the QR code above and select Save Image As to download it for print!')">How to Download</button>
+            </div>
+
         </div>
 
         <div class="footer-note">
@@ -561,7 +570,7 @@
     <script>
         const githubPageUrl = "https://clickormediaweb-tech.github.io/visaway-portal/";
 
-        // Automatically render the QR code on the initial generator screen
+        // Automatically render the QR code for admin use
         window.onload = function() {
             new QRCode(document.getElementById("qrcode"), {
                 text: githubPageUrl,
