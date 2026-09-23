@@ -11,10 +11,11 @@
             --primary-navy: #0B192C;
             --secondary-navy: #1E3E62;
             --brand-red: #D9232D;
+            --brand-red-hover: #B51B22;
             --brand-red-light: #FCE8E6;
             --card-bg: #FFFFFF;
-            --text-main: #222222;
-            --text-muted: #555555;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
             --border-color: #CBD5E1;
             --input-bg: #F8FAFC;
         }
@@ -40,7 +41,7 @@
 
         .container {
             width: 100%;
-            max-width: 560px;
+            max-width: 600px;
             background: var(--card-bg);
             border-radius: 24px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
@@ -57,18 +58,18 @@
 
         .brand-header {
             background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
-            padding: 22px 24px;
+            padding: 24px;
             text-align: center;
             border-bottom: 4px solid var(--brand-red);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 14px;
+            gap: 16px;
         }
 
         .brand-logo {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--brand-red);
@@ -77,7 +78,7 @@
 
         .brand-text h1 {
             color: #FFFFFF;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -86,14 +87,15 @@
 
         .brand-text p {
             color: #E2E8F0;
-            font-size: 0.75rem;
-            font-weight: 300;
+            font-size: 0.78rem;
+            font-weight: 400;
             letter-spacing: 0.5px;
             text-align: left;
+            margin-top: 2px;
         }
 
         .content-body {
-            padding: 30px;
+            padding: 32px;
             background: #FFFFFF;
             max-height: 75vh;
             overflow-y: auto;
@@ -112,32 +114,39 @@
         }
 
         .generator-card h2 {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--primary-navy);
             margin-bottom: 8px;
             font-weight: 700;
         }
 
         .generator-card p {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         #qrcode {
             display: flex;
             justify-content: center;
             margin: 20px auto;
-            padding: 16px;
+            padding: 20px;
             background: #FAFAFA;
             border: 1px dashed var(--border-color);
             border-radius: 16px;
             width: max-content;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #qrcode:hover {
+            transform: scale(1.02);
+            border-color: var(--brand-red);
         }
 
         .portal-screen h2 {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--primary-navy);
             text-align: center;
             margin-bottom: 24px;
@@ -151,7 +160,7 @@
             background: #F8FAFC;
             border: 1.5px solid #E2E8F0;
             border-radius: 16px;
-            padding: 20px;
+            padding: 22px;
             margin-bottom: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -167,21 +176,21 @@
         }
 
         .option-info h3 {
-            font-size: 1rem;
+            font-size: 1.02rem;
             color: var(--primary-navy);
             font-weight: 700;
             margin-bottom: 4px;
         }
 
         .option-info p {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
             line-height: 1.4;
         }
 
         .option-icon {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: var(--brand-red-light);
             display: flex;
@@ -190,18 +199,35 @@
             color: var(--brand-red);
             font-size: 1.1rem;
             flex-shrink: 0;
-            margin-left: 15px;
+            margin-left: 16px;
         }
 
         .form-section-title {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: var(--brand-red);
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            margin: 24px 0 12px 0;
+            margin: 28px 0 14px 0;
             border-bottom: 2px solid #F1F5F9;
             padding-bottom: 6px;
+        }
+
+        /* Perfect Form Grid Alignment */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-grid.single-col {
+            grid-template-columns: 1fr;
+        }
+
+        @media (max-width: 540px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .form-group {
@@ -209,18 +235,13 @@
             text-align: left;
         }
 
-        .form-row {
-            display: flex;
-            gap: 14px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: var(--primary-navy);
             margin-bottom: 6px;
@@ -247,16 +268,15 @@
 
         textarea.form-control {
             resize: vertical;
-            min-height: 90px;
+            min-height: 95px;
         }
 
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
-            margin-top: 8px;
+            gap: 14px;
             background: var(--input-bg);
-            padding: 12px 14px;
+            padding: 14px;
             border-radius: 10px;
             border: 1.5px solid var(--border-color);
         }
@@ -269,6 +289,7 @@
             cursor: pointer;
             color: var(--text-main);
             font-weight: 500;
+            user-select: none;
         }
 
         .checkbox-label input[type="checkbox"] {
@@ -278,6 +299,7 @@
             cursor: pointer;
         }
 
+        /* Perfectly Aligned Educational Table */
         .edu-table-container {
             overflow-x: auto;
             margin-bottom: 16px;
@@ -288,15 +310,16 @@
         .edu-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             text-align: left;
             background: #FFFFFF;
+            min-width: 480px;
         }
 
         .edu-table th {
             background: var(--primary-navy);
             color: #FFFFFF;
-            padding: 10px 8px;
+            padding: 12px 10px;
             font-weight: 600;
             letter-spacing: 0.3px;
         }
@@ -304,24 +327,30 @@
         .edu-table td {
             border-bottom: 1px solid #E2E8F0;
             border-right: 1px solid #E2E8F0;
-            padding: 8px;
+            padding: 8px 10px;
         }
 
         .edu-table td:last-child {
             border-right: none;
         }
 
+        .edu-table tr:last-child td {
+            border-bottom: none;
+        }
+
         .edu-table input {
             width: 100%;
             border: none;
             outline: none;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             background: transparent;
             padding: 4px;
+            color: var(--text-main);
         }
 
         .edu-table input:focus {
             background: var(--input-bg);
+            border-radius: 4px;
         }
 
         .btn-action {
@@ -335,12 +364,12 @@
             font-size: 0.95rem;
             cursor: pointer;
             transition: background 0.3s, transform 0.1s;
-            margin-top: 20px;
+            margin-top: 24px;
             box-shadow: 0 4px 12px rgba(217, 35, 45, 0.3);
         }
 
         .btn-action:hover {
-            background: #B51B22;
+            background: var(--brand-red-hover);
         }
 
         .btn-action:active {
@@ -348,9 +377,11 @@
         }
 
         .back-link {
-            display: inline-block;
-            margin-bottom: 14px;
-            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 16px;
+            font-size: 0.82rem;
             color: var(--brand-red);
             text-decoration: none;
             font-weight: 700;
@@ -365,7 +396,7 @@
         .footer-note {
             text-align: center;
             padding: 14px;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             border-top: 1px solid #EEEEEE;
             background: #FAFAFA;
@@ -376,6 +407,7 @@
 <body>
 
     <div class="container">
+        <!-- Brand Header -->
         <div class="brand-header">
             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23D9232D'/><text x='50' y='65' font-size='45' font-family='Arial' fill='FFF' text-anchor='middle'>V</text></svg>" alt="Visaway Logo" class="brand-logo">
             <div class="brand-text">
@@ -389,7 +421,7 @@
             <!-- SCREEN 1: QR CODE VIEW -->
             <div id="screen-generator" class="screen-view active generator-card">
                 <h2>Official Company QR Code</h2>
-                <p>Scan the QR code</p>
+                <p>Scan the QR code to open the client portal directly on your device.</p>
                 <div id="qrcode" title="Click to test portal categories" onclick="switchScreen('screen-selection')"></div>
             </div>
 
@@ -417,11 +449,11 @@
             <!-- SCREEN 3: NEW CLIENT FORM -->
             <div id="screen-new-form" class="screen-view portal-screen">
                 <a class="back-link" onclick="switchScreen('screen-selection')">← Back to options</a>
-                <h2 style="text-align: left; margin-bottom: 16px; font-size: 1.15rem;">New Client Registration</h2>
+                <h2 style="text-align: left; margin-bottom: 20px; font-size: 1.15rem;">New Client Registration</h2>
                 
                 <form onsubmit="handleFormSubmit(event, 'New Client Inquiry')">
                     <div class="form-section-title" style="margin-top: 0;">Personal Details</div>
-                    <div class="form-row">
+                    <div class="form-grid">
                         <div class="form-group">
                             <label>Full Name</label>
                             <input type="text" class="form-control" required placeholder="e.g., Sajid Ali">
@@ -430,8 +462,6 @@
                             <label>Father's Name</label>
                             <input type="text" class="form-control" required placeholder="e.g., Sabit Ali">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group">
                             <label>Contact Number (WhatsApp)</label>
                             <input type="tel" class="form-control" required placeholder="e.g., 8146037497">
@@ -440,8 +470,6 @@
                             <label>Email Address</label>
                             <input type="email" class="form-control" required placeholder="name@gmail.com">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group">
                             <label>Address</label>
                             <input type="text" class="form-control" placeholder="VPO / City">
@@ -450,9 +478,7 @@
                             <label>Date of Birth (D.O.B.)</label>
                             <input type="date" class="form-control">
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group full-width">
                             <label>Marital Status</label>
                             <select class="form-control">
                                 <option>Single</option>
@@ -518,7 +544,7 @@
                     </div>
 
                     <div class="form-section-title">Language Tests &amp; Scores</div>
-                    <div class="form-row">
+                    <div class="form-grid">
                         <div class="form-group">
                             <label>Exam Date</label>
                             <input type="date" class="form-control">
@@ -530,7 +556,7 @@
                     </div>
 
                     <div class="form-section-title">Visa History &amp; Preferences</div>
-                    <div class="form-row">
+                    <div class="form-grid">
                         <div class="form-group">
                             <label>Any Prior Visa Refusal?</label>
                             <select class="form-control">
@@ -544,7 +570,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 16px;">
                         <label>Preferred Country</label>
                         <div class="checkbox-group">
                             <label class="checkbox-label"><input type="checkbox"> Canada</label>
@@ -566,33 +592,35 @@
             <!-- SCREEN 4: EXISTING / REVISIT CLIENT FORM -->
             <div id="screen-revisit-form" class="screen-view portal-screen">
                 <a class="back-link" onclick="switchScreen('screen-selection')">← Back to options</a>
-                <h2 style="text-align: left; margin-bottom: 16px; font-size: 1.15rem;">Existing Client Case Portal (Revisit)</h2>
+                <h2 style="text-align: left; margin-bottom: 20px; font-size: 1.15rem;">Existing Client Case Portal (Revisit)</h2>
                 
                 <form onsubmit="handleFormSubmit(event, 'Revisit Case')">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" class="form-control" required placeholder="Enter your full name">
-                    </div>
-                    <div class="form-group">
-                        <label>Contact Number (WhatsApp)</label>
-                        <input type="tel" class="form-control" required placeholder="Enter registered phone number">
-                    </div>
-                    <div class="form-group">
-                        <label>Assigned File Reference / ID Number</label>
-                        <input type="text" class="form-control" required placeholder="e.g., VW-2026-XXXX">
-                    </div>
-                    <div class="form-group">
-                        <label>Purpose of Revisit / Update Needed</label>
-                        <select class="form-control">
-                            <option>File Processing Status Update</option>
-                            <option>Document Submission / Upload</option>
-                            <option>IELTS / PTE Class Follow-up</option>
-                            <option>Consultation with Senior Advisor</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Additional Notes or Message for Counselor</label>
-                        <textarea class="form-control" rows="3" placeholder="Describe what you would like to discuss..."></textarea>
+                    <div class="form-grid single-col">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number (WhatsApp)</label>
+                            <input type="tel" class="form-control" required placeholder="Enter registered phone number">
+                        </div>
+                        <div class="form-group">
+                            <label>Assigned File Reference / ID Number</label>
+                            <input type="text" class="form-control" required placeholder="e.g., VW-2026-XXXX">
+                        </div>
+                        <div class="form-group">
+                            <label>Purpose of Revisit / Update Needed</label>
+                            <select class="form-control">
+                                <option>File Processing Status Update</option>
+                                <option>Document Submission / Upload</option>
+                                <option>IELTS / PTE Class Follow-up</option>
+                                <option>Consultation with Senior Advisor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Additional Notes or Message for Counselor</label>
+                            <textarea class="form-control" placeholder="Describe what you would like to discuss..."></textarea>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn-action">Pull Up My File</button>
