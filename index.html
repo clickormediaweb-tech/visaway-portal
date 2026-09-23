@@ -80,67 +80,6 @@
             background: #FFFFFF;
         }
 
-        .generator-card {
-            text-align: center;
-        }
-
-        .generator-card h2 {
-            font-size: 1.05rem;
-            color: var(--primary-navy);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .generator-card p {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        #qrcode {
-            display: flex;
-            justify-content: center;
-            margin: 15px 0;
-            padding: 15px;
-            background: #FAFAFA;
-            border: 1px dashed #CBD5E1;
-            border-radius: 12px;
-        }
-
-        .btn-action {
-            width: 100%;
-            background: var(--brand-red);
-            color: #FFFFFF;
-            border: none;
-            padding: 13px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
-        }
-
-        .btn-action:hover {
-            background: #B51B22;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--primary-navy);
-            border: 1.5px solid var(--primary-navy);
-            margin-top: 8px;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(11, 25, 44, 0.05);
-        }
-
-        .portal-screen {
-            display: none;
-        }
-
         .portal-screen h2 {
             font-size: 1.05rem;
             color: var(--primary-navy);
@@ -229,6 +168,24 @@
             border-color: var(--brand-red);
         }
 
+        .btn-action {
+            width: 100%;
+            background: var(--brand-red);
+            color: #FFFFFF;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-action:hover {
+            background: #B51B22;
+        }
+
         .back-link {
             display: inline-block;
             margin-bottom: 12px;
@@ -237,6 +194,15 @@
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
+        }
+
+        .admin-toggle {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-decoration: underline;
         }
 
         .footer-note {
@@ -258,38 +224,30 @@
         </div>
 
         <div class="content-body">
-            <div id="generatorScreen" class="generator-card">
-                <h2>Client Portal QR Code</h2>
-                <p>This permanent QR code is linked to your live GitHub website address.</p>
-                
-                <div id="qrcode"></div>
-                
-                <button class="btn-action" onclick="switchToPortal()">Simulate Client View</button>
-                <button class="btn-action btn-secondary" onclick="alert('Right-click the QR code image above and select \'Save image as\' to download it for print!')">How to Download</button>
-            </div>
-
+            <!-- SELECTION SCREEN (Appears immediately when scanned) -->
             <div id="selectionScreen" class="portal-screen">
                 <h2>Welcome. Please select your client status:</h2>
                 
                 <button class="option-card" onclick="selectJourney('new')">
                     <div class="option-info">
-                        <h3>New Client Consultation</h3>
-                        <p>Explore visa pathways, eligibility checks, and book initial assessments.</p>
+                        <h3>New Client Inquiry &amp; Consultation</h3>
+                        <p>Begin your journey, explore visa pathways, and check eligibility.</p>
                     </div>
                     <div class="option-icon">✦</div>
                 </button>
 
                 <button class="option-card" onclick="selectJourney('revisit')">
                     <div class="option-info">
-                        <h3>Existing / Revisit Customer</h3>
-                        <p>Follow up on active file processing, document submission, or case review.</p>
+                        <h3>Existing Client Case Portal</h3>
+                        <p>Revisit your active file, submit documents, or check processing updates.</p>
                     </div>
                     <div class="option-icon">➔</div>
                 </button>
 
-                <button class="btn-action btn-secondary" style="margin-top: 20px;" onclick="switchToGenerator()">← Back to QR Generator</button>
+                <div class="admin-toggle" onclick="showGeneratorModal()">[Admin: View Printable QR Code]</div>
             </div>
 
+            <!-- DYNAMIC FORM SCREEN -->
             <div id="formScreen" class="portal-screen dynamic-form">
                 <a class="back-link" onclick="goBackToSelection()">← Back to options</a>
                 <h2 id="formTitle" style="text-align: left; margin-bottom: 15px;"></h2>
@@ -305,10 +263,21 @@
                     </div>
                     <div class="form-group" id="extraFieldContainer">
                         <label id="extraLabel">Visa Category of Interest</label>
-                        <input type="text" class="form-control" id="dynamicInput" placeholder="e.g., Skilled Worker, Spouse Visa">
+                        <input type="text" class="form-control" id="dynamicInput" placeholder="e.g., Skilled Worker, Student Visa">
                     </div>
-                    <button type="submit" class="btn-action">Proceed Securely</button>
+                    <button type="submit" class="btn-action">Submit Securely</button>
                 </form>
+            </div>
+
+            <!-- ADMIN QR CODE DISPLAY MODAL (Hidden by default) -->
+            <div id="generatorScreen" class="portal-screen" style="display: none; text-align: center;">
+                <a class="back-link" onclick="goBackToSelection()">← Back to Client Portal</a>
+                <h2 style="margin-bottom: 5px;">Your Permanent QR Code</h2>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 15px;">Scan this or save it for printing.</p>
+                
+                <div id="qrcode" style="display: flex; justify-content: center; margin: 15px 0; padding: 15px; background: #FAFAFA; border: 1px dashed #CBD5E1; border-radius: 12px;"></div>
+                
+                <p style="font-size: 0.72rem; color: var(--text-muted);">Right-click the QR code above to save image for print.</p>
             </div>
         </div>
 
@@ -318,27 +287,24 @@
     </div>
 
     <script>
-        // REPLACE THE URL BELOW with your final GitHub Pages link after creating your repository
-        const githubPageUrl = " https://clickormediaweb-tech.github.io/visaway-portal/";
+        // Your live GitHub Pages link
+        const githubPageUrl = "https://clickormediaweb-tech.github.io/visaway-portal/";
 
+        // Generate the QR code automatically in the hidden admin view
         window.onload = function() {
             new QRCode(document.getElementById("qrcode"), {
                 text: githubPageUrl,
                 width: 170,
                 height: 170,
-                colorDark : "#0B192C",  // Deep Navy QR dots matching your brand
-                colorLight : "#FFFFFF", // Clean White background
+                colorDark : "#0B192C",
+                colorLight : "#FFFFFF",
                 correctLevel : QRCode.CorrectLevel.H
             });
         };
 
-        function switchToPortal() {
-            document.getElementById('generatorScreen').style.display = 'none';
-            document.getElementById('selectionScreen').style.display = 'block';
-        }
-
-        function switchToGenerator() {
+        function showGeneratorModal() {
             document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('formScreen').style.display = 'none';
             document.getElementById('generatorScreen').style.display = 'block';
         }
 
@@ -347,6 +313,7 @@
         function selectJourney(type) {
             currentType = type;
             document.getElementById('selectionScreen').style.display = 'none';
+            document.getElementById('generatorScreen').style.display = 'none';
             document.getElementById('formScreen').style.display = 'block';
             
             const titleEl = document.getElementById('formTitle');
@@ -354,26 +321,27 @@
             const dynamicInputEl = document.getElementById('dynamicInput');
 
             if (type === 'new') {
-                titleEl.innerText = 'New Client Registration';
+                titleEl.innerText = 'New Client Inquiry & Consultation';
                 extraLabelEl.innerText = 'Target Visa / Destination Country';
                 dynamicInputEl.placeholder = 'e.g., Skilled Worker, Student Visa';
             } else {
-                titleEl.innerText = 'Client Check-In (Revisit)';
-                extraLabelEl.innerText = 'Reference Number or File ID';
+                titleEl.innerText = 'Existing Client Case Portal';
+                extraLabelEl.innerText = 'Reference File ID / Registration Number';
                 dynamicInputEl.placeholder = 'e.g., VW-2026-XXXX';
             }
         }
 
         function goBackToSelection() {
             document.getElementById('formScreen').style.display = 'none';
+            document.getElementById('generatorScreen').style.display = 'none';
             document.getElementById('selectionScreen').style.display = 'block';
         }
 
         function handleSubmit(e) {
             e.preventDefault();
             alert(currentType === 'new' 
-                ? 'Thank you! Redirecting you to our immigration consultant matching desk...' 
-                : 'Thank you! Pulling up your active file details...');
+                ? 'Thank you! Your inquiry has been submitted. Our immigration advisory team will contact you shortly.' 
+                : 'Thank you! Pulling up your active case file details...');
         }
     </script>
 </body>
