@@ -213,7 +213,6 @@
             padding-bottom: 6px;
         }
 
-        /* Perfect Form Grid Alignment */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -299,7 +298,6 @@
             cursor: pointer;
         }
 
-        /* Perfectly Aligned Educational Table */
         .edu-table-container {
             overflow-x: auto;
             margin-bottom: 16px;
@@ -407,7 +405,6 @@
 <body>
 
     <div class="container">
-        <!-- Brand Header -->
         <div class="brand-header">
             <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23D9232D'/><text x='50' y='65' font-size='45' font-family='Arial' fill='FFF' text-anchor='middle'>V</text></svg>" alt="Visaway Logo" class="brand-logo">
             <div class="brand-text">
@@ -636,9 +633,11 @@
 
     <script>
         const githubPageUrl = "https://clickormediaweb-tech.github.io/visaway-portal/";
+        
+        // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL INSIDE THE QUOTES BELOW:
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyJVJjpKh1I3InyhoAjShK8zLSPek-hbRvwN6u2iLlA5xTHfvoSSj2fG7uJ7yHnBNIa/exec";
 
         window.onload = function() {
-            // Render QR Code on the first screen
             new QRCode(document.getElementById("qrcode"), {
                 text: githubPageUrl + "#portal",
                 width: 170,
@@ -648,13 +647,11 @@
                 correctLevel : QRCode.CorrectLevel.H
             });
 
-            // If opened via phone scan (#portal), go straight to categories
             if (window.location.hash === "#portal") {
                 switchScreen('screen-selection');
             }
         };
 
-        // Smooth screen switcher
         function switchScreen(screenId) {
             const screens = document.querySelectorAll('.screen-view');
             screens.forEach(s => s.classList.remove('active'));
@@ -662,9 +659,94 @@
             document.querySelector('.content-body').scrollTop = 0;
         }
 
-        function handleFormSubmit(e, formName) {
+        async function handleFormSubmit(e, formName) {
             e.preventDefault();
-            alert('Thank you! Your ' + formName + ' has been submitted successfully to Visaway Immigration.');
+            const form = e.target;
+            const submitBtn = form.querySelector('.btn-action');
+            const originalBtnText = submitBtn.innerText;
+            
+            submitBtn.innerText = "Submitting...";
+            submitBtn.disabled = true;
+
+            let formDataObj = { 
+                FormType: formName, 
+                Timestamp: new Date().toLocaleString() 
+            };
+
+            if (formName === 'New Client Inquiry') {
+                const checkboxes = form.querySelectorAll('.form-group input[type="checkbox"]');
+                let purposes = [];
+                let countries = [];
+                
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        let labelText = cb.parentElement.innerText.trim();
+                        if (["IELTS", "PTE", "Study Visa", "Tourist Visa", "Work Permit"].includes(labelText)) {
+                            purposes.push(labelText);
+                        } else {
+                            countries.push(labelText);
+                        }
+                    }
+                });
+
+                formDataObj.FullName = form.querySelectorAll('input')[0].value;
+                formDataObj.FatherName = form.querySelectorAll('input')[1].value;
+                formDataObj.Phone = form.querySelectorAll('input')[2].value;
+                formDataObj.Email = form.querySelectorAll('input')[3].value;
+                formDataObj.Address = form.querySelectorAll('input')[4].value;
+                formDataObj.DOB = form.querySelectorAll('input')[5].value;
+                formDataObj.MaritalStatus = form.querySelector('select').value;
+                formDataObj.PurposeOfVisit = purposes.join(', ');
+                
+                let eduSummary = [];
+                const rows = form.querySelectorAll('.edu-table tbody tr');
+                rows.forEach(row => {
+                    let level = row.querySelector('strong').innerText;
+                    let stream = row.querySelectorAll('input')[0].value;
+                    let board = row.querySelectorAll('input')[1].value;
+                    let year = row.querySelectorAll('input')[2].value;
+                    let pct = row.querySelectorAll('input')[3].value;
+                    if(stream || board) {
+                        eduSummary.push(`${level}: ${stream}, ${board} (${year}), ${pct}`);
+                    }
+                });
+                formDataObj.Education = eduSummary.join(' | ');
+
+                formDataObj.ExamDate = form.querySelectorAll('input[type="date"]')[1]?.value || '';
+                formDataObj.Score = form.querySelectorAll('input')[6]?.value || '';
+                formDataObj.VisaRefusal = form.querySelectorAll('select')[1]?.value || 'No';
+                formDataObj.WorkExp = form.querySelectorAll('input')[7]?.value || '';
+                formDataObj.PreferredCountry = countries.join(', ');
+                formDataObj.CourseField = form.querySelectorAll('input')[8]?.value || '';
+
+            } else {
+                formDataObj.FullName = form.querySelectorAll('input')[0].value;
+                formDataObj.Phone = form.querySelectorAll('input')[1].value;
+                formDataObj.FileReference = form.querySelectorAll('input')[2].value;
+                formDataObj.PurposeOfRevisit = form.querySelector('select').value;
+                formDataObj.Notes = form.querySelector('textarea').value;
+            }
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formDataObj)
+                });
+
+                alert('Thank you! Your ' + formName + ' has been successfully saved to the Excel sheet.');
+                form.reset();
+                switchScreen('screen-selection');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was a network error while saving to the sheet. Please check your connection.');
+            } finally {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            }
         }
     </script>
 </body>
