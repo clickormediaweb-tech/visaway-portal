@@ -628,6 +628,19 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Purpose of Revisit / Update Needed</label>
+                            <select class="form-control">
+                                <option>File Processing Status Update</option>
+                                <option>Document Submission / Upload</option>
+                                <option>IELTS / PTE Class Follow-up</option>
+                                <option>Consultation with Senior Advisor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Counselor Assigned</label>
+                            <input type="text" id="revisitCounselorInput" class="form-control" placeholder="Enter counselor name (Optional)">
+                        </div>
+                        <div class="form-group">
                             <label>Additional Notes or Message for Counselor</label>
                             <textarea class="form-control" placeholder="Describe what you would like to discuss..."></textarea>
                         </div>
@@ -733,11 +746,12 @@
                 formDataObj.PreferredCountry = countries.join(', ');
                 formDataObj.CourseField = form.querySelectorAll('input')[10]?.value || '';
 
-            } else {
+           } else {
                 formDataObj.FullName = form.querySelectorAll('input')[0].value;
                 formDataObj.Phone = form.querySelectorAll('input')[1].value;
                 formDataObj.FileReference = form.querySelectorAll('input')[2].value;
                 formDataObj.PurposeOfRevisit = form.querySelector('select').value;
+                formDataObj.CounselorAssigned = document.getElementById('revisitCounselorInput').value || '';
                 formDataObj.Notes = form.querySelector('textarea').value;
             }
 
