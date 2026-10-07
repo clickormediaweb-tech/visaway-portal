@@ -474,6 +474,10 @@
     <input type="text" class="form-control" placeholder="e.g., Ref ID or Name (Optional)">
 </div>
                         <div class="form-group">
+    <label>Counselor Assigned</label>
+    <input type="text" id="counselorInput" class="form-control" placeholder="e.g., Counselor Name (Optional)">
+</div>
+                        <div class="form-group">
                             <label>Address</label>
                             <input type="text" class="form-control" placeholder="VPO / City">
                         </div>
@@ -702,9 +706,10 @@
                 formDataObj.FatherName = form.querySelectorAll('input')[1].value;
                 formDataObj.Phone = form.querySelectorAll('input')[2].value;
                 formDataObj.Email = form.querySelectorAll('input')[3].value || '';
-                formDataObj.ReferenceID = document.getElementById('refIdInput').value || ''; // Captured via ID safely
-                formDataObj.Address = form.querySelectorAll('input')[5].value;
-                formDataObj.DOB = form.querySelectorAll('input')[6].value;
+                formDataObj.ReferenceID = document.getElementById('refIdInput').value || '';
+                formDataObj.CounselorAssigned = document.getElementById('counselorInput').value || ''; // Captured via ID safely
+                formDataObj.Address = form.querySelectorAll('input')[6].value;
+                formDataObj.DOB = form.querySelectorAll('input')[7].value;
                 formDataObj.MaritalStatus = form.querySelector('select').value;
                 formDataObj.PurposeOfVisit = purposes.join(', ');
                 
@@ -723,11 +728,11 @@
                 formDataObj.Education = eduSummary.join(' | ');
 
                 formDataObj.ExamDate = form.querySelectorAll('input[type="date"]')[1]?.value || '';
-                formDataObj.Score = form.querySelectorAll('input')[7]?.value || '';
+                formDataObj.Score = form.querySelectorAll('input')[8]?.value || '';
                 formDataObj.VisaRefusal = form.querySelectorAll('select')[1]?.value || 'No';
-                formDataObj.WorkExp = form.querySelectorAll('input')[8]?.value || '';
+                formDataObj.WorkExp = form.querySelectorAll('input')[9]?.value || '';
                 formDataObj.PreferredCountry = countries.join(', ');
-                formDataObj.CourseField = form.querySelectorAll('input')[9]?.value || '';
+                formDataObj.CourseField = form.querySelectorAll('input')[10]?.value || '';
 
             } else {
                 formDataObj.FullName = form.querySelectorAll('input')[0].value;
