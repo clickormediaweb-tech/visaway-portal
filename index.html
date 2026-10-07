@@ -701,9 +701,10 @@
                 formDataObj.FullName = form.querySelectorAll('input')[0].value;
                 formDataObj.FatherName = form.querySelectorAll('input')[1].value;
                 formDataObj.Phone = form.querySelectorAll('input')[2].value;
-                formDataObj.Email = form.querySelectorAll('input')[3].value;
-                formDataObj.Address = form.querySelectorAll('input')[4].value;
-                formDataObj.DOB = form.querySelectorAll('input')[5].value;
+                formDataObj.Email = form.querySelectorAll('input')[3].value || '';
+                formDataObj.ReferenceID = document.getElementById('refIdInput').value || ''; // Captured via ID safely
+                formDataObj.Address = form.querySelectorAll('input')[5].value;
+                formDataObj.DOB = form.querySelectorAll('input')[6].value;
                 formDataObj.MaritalStatus = form.querySelector('select').value;
                 formDataObj.PurposeOfVisit = purposes.join(', ');
                 
@@ -722,11 +723,11 @@
                 formDataObj.Education = eduSummary.join(' | ');
 
                 formDataObj.ExamDate = form.querySelectorAll('input[type="date"]')[1]?.value || '';
-                formDataObj.Score = form.querySelectorAll('input')[6]?.value || '';
+                formDataObj.Score = form.querySelectorAll('input')[7]?.value || '';
                 formDataObj.VisaRefusal = form.querySelectorAll('select')[1]?.value || 'No';
-                formDataObj.WorkExp = form.querySelectorAll('input')[7]?.value || '';
+                formDataObj.WorkExp = form.querySelectorAll('input')[8]?.value || '';
                 formDataObj.PreferredCountry = countries.join(', ');
-                formDataObj.CourseField = form.querySelectorAll('input')[8]?.value || '';
+                formDataObj.CourseField = form.querySelectorAll('input')[9]?.value || '';
 
             } else {
                 formDataObj.FullName = form.querySelectorAll('input')[0].value;
